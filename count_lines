@@ -1,0 +1,14 @@
+#!/bin/bash
+count()
+{
+	for file in $1/*; do
+        	if [[ -f "$file" ]] ; then
+                	a=`wc -l <$file`
+         	      	let b=$b+$a
+        	elif [[ -d "$file" ]] ; then
+			count "${file}"
+		fi
+	done
+}
+count $1
+echo $b
