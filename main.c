@@ -7,10 +7,7 @@
 #include "runway.h"
 #include "airport.h"
 #define MAX_LENGHT (256)
-//haedo :) 
-//asjkhdajkhdjakhd 
-///sakdjkasklda
-///aksjdkljadksa
+
 int NumOfArg(char *argument, char *argument1, char *argument2, char *argument3, char *argument4)
 {
 	int numofarg = 0;
