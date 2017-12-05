@@ -5,15 +5,13 @@
 #include "runway.h"
 #include "ex2.h"
 
-
+Result destroy_aux(Node *head, int flight_num, PRunway runway);
 
 typedef struct node
 {
-	PFlight flight;//maybe not pointer
+	PFlight flight;
 	struct node* next_flight;
 } Node;
-
-Result destroy_aux(Node *head, int flight_num,PRunway runway);
 
 typedef struct runway_t
 {
@@ -23,6 +21,14 @@ typedef struct runway_t
 	Node* Reg_list_head;
 } Runway;
 
+//*************************************************************************************
+//* function name : createRunway
+//* Description   :	Function gets the number of runway (positive integer)
+//*					you want to create and kind of runway: Domestic or International. 
+//* Parameters    :	positive integer for runway ID and type of runway (FlightType),
+//*					Domestic or International.
+//* Return value  :	Pointer for runway 
+//*************************************************************************************
 PRunway createRunway(int runway_num, FlightType runway_type)
 {
 	if (runway_num<1 || runway_num>MAX_ID)
@@ -38,7 +44,13 @@ PRunway createRunway(int runway_num, FlightType runway_type)
 	temp->Reg_num = 0;
 	return temp;
 }
-
+//*************************************************************************************
+//* Function name :	destroyRunway
+//* Description   :	Function destoys the runway , frees all flights from the runway 
+//*					and frees the runway it self . No need for extra job to clear memory.
+//* Parameters    :	Pointer to the runway from PRunway type .
+//* Return value  :	none .
+//*************************************************************************************
 void destroyRunway(PRunway runway)
 {
 	if (runway == NULL)
@@ -48,7 +60,14 @@ void destroyRunway(PRunway runway)
 	free(runway);
 	return;
 }
-
+//*************************************************************************************
+// Function name :	addFlight
+// Description   :	Function add flight to the runway , Emergency flight are added to 
+//					the beginning of the list right after last emergency flight . 
+//					Regular flights are added at the end of the list.
+// Parameters    :	Pointer to runway (PRunway) and pointer to flight (PFlight).
+// Return value  :	SUCCESS if it is posible to add and FAILURE if it isn't.
+//*************************************************************************************
 Result addFlight(PRunway runway, PFlight flight)
 {
 	Node *temp=NULL;
@@ -105,14 +124,14 @@ BOOL isFlightExists(PRunway runway, int flight_num)
 	if (flight_num<1 || flight_num>MAX_ID || runway == NULL)
 		return FALSE;
 	Node *temp = runway->Emr_list_head;
-	while (temp!=NULL ) //&& temp->next_flight != NULL
+	while (temp!=NULL ) 
 	{
 		if (getFlightId(temp->flight) == flight_num)
 			return TRUE;
 		temp = temp->next_flight;
 	}
 	temp = runway->Reg_list_head;
-	while (temp != NULL ) //&& temp->next_flight != NULL
+	while (temp != NULL ) 
 	{
 		if (getFlightId(temp->flight) == flight_num)
 			return TRUE;
