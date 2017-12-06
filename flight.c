@@ -4,6 +4,9 @@
 #include "flight.h"
 #include "ex2.h"
 
+/*************************************************************************************
+The srtuct of the flight.
+**************************************************************************************/
 typedef struct flight_t 
 {
 	int flight_ID;
@@ -21,7 +24,7 @@ typedef struct flight_t
 //**************************************************************************************/
 PFlight createFlight(int Flight_num, FlightType Typef, char* Destenation, BOOL Emergency)
 {
-	int i=0;
+	int i=0;					//cheching the inputs 
 	if (Flight_num<1 && Flight_num> MAX_ID)
 		return NULL;
 	if (strlen(Destenation) != 3)
@@ -39,7 +42,7 @@ PFlight createFlight(int Flight_num, FlightType Typef, char* Destenation, BOOL E
 	{
 			temp->Dest[i]= Destenation[i];
 	}
-	temp->Dest[3] = '\0';
+	temp->Dest[3] = '\0'; //creating the flight
 	temp->Emr = Emergency;
 	temp->flight_ID = Flight_num;
 	temp->Type = Typef;

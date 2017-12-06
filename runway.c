@@ -35,7 +35,7 @@ typedef struct runway_t
 //**************************************************************************************/
 PRunway createRunway(int runway_num, FlightType runway_type)
 {
-	if (runway_num<1 || runway_num>MAX_ID)
+	if (runway_num<1 || runway_num>MAX_ID)	//cheching the input
 		return NULL;
 	PRunway temp = (PRunway)malloc(sizeof(Runway));
 	if (temp == NULL)
@@ -74,10 +74,12 @@ void destroyRunway(PRunway runway)
 //*************************************************************************************/
 Result addFlight(PRunway runway, PFlight flight)
 {
-	Node *temp=NULL;
+	if (runway == NULL || flight == NULL)
+		return FAILURE;
 	if (runway->Type != getFlightType(flight))
 		return FAILURE;
-	if (getFlightEmr(flight) == TRUE)
+	Node *temp = NULL;
+	if (getFlightEmr(flight) == TRUE) // chech is the flight is emergensy or not 
 	{
 		temp = runway->Emr_list_head;
 		runway->Emr_num=runway->Emr_num++;
@@ -87,13 +89,13 @@ Result addFlight(PRunway runway, PFlight flight)
 		temp = runway->Reg_list_head;
 		runway->Reg_num++;
 	}
-	if (temp != NULL)
+	if (temp != NULL) // if not the first flight at the list 
 	{
-		while (temp->next_flight != NULL)
+		while (temp->next_flight != NULL) // iterate the list till the last node
 		{
 			temp = temp->next_flight;
 		}
-		temp->next_flight = (Node*)malloc(sizeof(Node));
+		temp->next_flight = (Node*)malloc(sizeof(Node)); // add the new flight at the end
 		if (temp->next_flight == NULL)
 			return FAILURE;
 		temp->next_flight->flight = flight;
@@ -131,9 +133,9 @@ Result addFlight(PRunway runway, PFlight flight)
 //*************************************************************************************/
 BOOL isFlightExists(PRunway runway, int flight_num)
 {
-	if (flight_num<1 || flight_num>MAX_ID || runway == NULL)
+	if (flight_num<1 || flight_num>MAX_ID || runway == NULL) //chech inputs
 		return FALSE;
-	Node *temp = runway->Emr_list_head;
+	Node *temp = runway->Emr_list_head; // search at the Emergency list
 	while (temp!=NULL ) 
 	{
 		if (getFlightId(temp->flight) == flight_num)
@@ -141,7 +143,7 @@ BOOL isFlightExists(PRunway runway, int flight_num)
 		temp = temp->next_flight;
 	}
 	temp = runway->Reg_list_head;
-	while (temp != NULL ) 
+	while (temp != NULL )	// search at the Regular list
 	{
 		if (getFlightId(temp->flight) == flight_num)
 			return TRUE;
@@ -191,11 +193,11 @@ Result destroy_aux(Node *head, int flight_num,PRunway runway)
 	if (current == NULL)
 		return FAILURE;
 	next = current->next_flight;
-	if (getFlightId(current->flight) == flight_num)
+	if (getFlightId(current->flight) == flight_num) // searching for flight by number at the head of both lists
 	{
 		if (getFlightEmr(current->flight) == TRUE)
 		{
-		  runway->Emr_num--;
+			runway->Emr_num--;				
 			runway->Emr_list_head = next;
 		}
 		if (getFlightEmr(current->flight) == FALSE)
@@ -203,15 +205,15 @@ Result destroy_aux(Node *head, int flight_num,PRunway runway)
 			runway->Reg_num--;
 			runway->Reg_list_head = next;
 		}
-		destroyFlight(current->flight);
+		destroyFlight(current->flight); 
 		free(current);
-		if(getEmergencyNum(runway)==0)
+		if(getEmergencyNum(runway)==0) // if it was last flight need to update the head
 			runway->Emr_list_head=NULL;
-		if(getFlightNum(runway)-getEmergencyNum(runway)==0)
+		if(getFlightNum(runway)-getEmergencyNum(runway)==0) // if it was last flight need to update the head
 			runway->Reg_list_head=NULL;
 		return SUCCESS;
 	}
-	if (next == NULL)
+	if (next == NULL) //same not for the head 
 		return FAILURE;
 	while (getFlightId(next->flight) != flight_num)
 	{
@@ -224,7 +226,7 @@ Result destroy_aux(Node *head, int flight_num,PRunway runway)
 			runway->Emr_num--;
 	if (getFlightEmr(next->flight) == FALSE)
 		 	runway->Reg_num--;
-	destroyFlight(next->flight);
+	destroyFlight(next->flight);					//destroying the flight and clear the memory 
 	current->next_flight = next->next_flight;
 	free(next);
 	if(getEmergencyNum(runway)==0)
@@ -340,9 +342,9 @@ void changeDestInRunway(PRunway runway, char* newDest, char* oldDest)
 	if ( runway == NULL)
 		return ;
 	Node *temp = runway->Emr_list_head;
-	while (temp != NULL)
+	while (temp != NULL)  // iterate the list 
 	{
-		if (!strcmp(getFlightDes(temp->flight), oldDest))
+		if (!strcmp(getFlightDes(temp->flight), oldDest)) // find the flight to the old destination 
 			setFlightDes(temp->flight, newDest);
 		temp = temp->next_flight;
 	}
@@ -368,10 +370,10 @@ Result delayRunway(PRunway runway, char* Dest)
 	int i=0;
 	if (runway == NULL)
 		return FAILURE;
-	if (runway->Emr_list_head == NULL && runway->Reg_list_head == NULL)
+	if (runway->Emr_list_head == NULL && runway->Reg_list_head == NULL) // no flight in the runway
 		return SUCCESS;
 	Node* temp;
-	temp = runway->Emr_list_head;
+	temp = runway->Emr_list_head; // first dellay all the emergency flight
 	int EM = 0;
 	if (temp != NULL)
 	{
@@ -381,7 +383,7 @@ Result delayRunway(PRunway runway, char* Dest)
 			Node* remover_Flight = temp->next_flight;
 			if (!strcmp(getFlightDes(temp->flight), Dest))
 			{
-				PFlight flight_temp = createFlight(getFlightId(temp->flight),
+				PFlight flight_temp = createFlight(getFlightId(temp->flight), // create new flight before deleting
 											getFlightType(temp->flight),
 											Dest, getFlightEmr(temp->flight));
 				if (removeFlight(runway, getFlightId(temp->flight)) == FAILURE)
@@ -392,7 +394,7 @@ Result delayRunway(PRunway runway, char* Dest)
 			temp = remover_Flight;
 		}
 	}
-	temp = (Node*)(runway->Reg_list_head);
+	temp = (Node*)(runway->Reg_list_head);// deley regular flights
 	int REG;
 	if (temp != NULL)
 	{

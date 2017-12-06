@@ -74,7 +74,6 @@ int main()
 		
 		if (argument == NULL)
 		{
-			fprintf(stderr, "Command not found.\n");
 			continue;
 		}
 		if (!strcmp(argument, "Insert"))
