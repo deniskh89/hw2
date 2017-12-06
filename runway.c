@@ -21,14 +21,14 @@ typedef struct runway_t
 	Node* Reg_list_head;
 } Runway;
 
-//*************************************************************************************
-//* function name : createRunway
+/*************************************************************************************
+//* function name : createRunway
 //* Description   :	Function gets the number of runway (positive integer)
 //*					you want to create and kind of runway: Domestic or International. 
 //* Parameters    :	positive integer for runway ID and type of runway (FlightType),
 //*					Domestic or International.
 //* Return value  :	Pointer for runway 
-//*************************************************************************************
+//**************************************************************************************/
 PRunway createRunway(int runway_num, FlightType runway_type)
 {
 	if (runway_num<1 || runway_num>MAX_ID)
@@ -44,13 +44,13 @@ PRunway createRunway(int runway_num, FlightType runway_type)
 	temp->Reg_num = 0;
 	return temp;
 }
-//*************************************************************************************
+/**************************************************************************************
 //* Function name :	destroyRunway
 //* Description   :	Function destoys the runway , frees all flights from the runway 
 //*					and frees the runway it self . No need for extra job to clear memory.
 //* Parameters    :	Pointer to the runway from PRunway type .
 //* Return value  :	none .
-//*************************************************************************************
+//*************************************************************************************/
 void destroyRunway(PRunway runway)
 {
 	if (runway == NULL)
@@ -60,14 +60,14 @@ void destroyRunway(PRunway runway)
 	free(runway);
 	return;
 }
-//*************************************************************************************
+/**************************************************************************************
 // Function name :	addFlight
 // Description   :	Function add flight to the runway , Emergency flight are added to 
-//					the beginning of the list right after last emergency flight . 
-//					Regular flights are added at the end of the list.
+//						the beginning of the list right after last emergency flight . 
+//						Regular flights are added at the end of the list.
 // Parameters    :	Pointer to runway (PRunway) and pointer to flight (PFlight).
 // Return value  :	SUCCESS if it is posible to add and FAILURE if it isn't.
-//*************************************************************************************
+//*************************************************************************************/
 Result addFlight(PRunway runway, PFlight flight)
 {
 	Node *temp=NULL;
@@ -119,6 +119,12 @@ Result addFlight(PRunway runway, PFlight flight)
 	}
 }
 
+/**************************************************************************************
+// Function name :	isFlightExists
+// Description   :	Function that checks if the runway got the FlightId .						
+// Parameters    :	Pointer to runway (PRunway) and integer number of the flight.
+// Return value  :	TRUE if the runway got the flight and FALSE if it doesn't.
+//*************************************************************************************/
 BOOL isFlightExists(PRunway runway, int flight_num)
 {
 	if (flight_num<1 || flight_num>MAX_ID || runway == NULL)
@@ -140,6 +146,12 @@ BOOL isFlightExists(PRunway runway, int flight_num)
 	return FALSE;
 }
 
+/**************************************************************************************
+// Function name :	getFlightNum
+// Description   :	Function gets the total number of flight at the runway.
+// Parameters    :	Pointer to runway (PRanway).
+// Return value  :	The number of total flight (Int).
+//*************************************************************************************/
 int getFlightNum(PRunway runway)
 {
 	if (runway == NULL)
@@ -147,6 +159,12 @@ int getFlightNum(PRunway runway)
 	return (runway->Emr_num + runway->Reg_num);
 }
 
+/**************************************************************************************
+// Function name :	getEmergencyNum
+// Description   :	Function gets the number of emergency flight at the runway.
+// Parameters    :	Pointer to runway (PRanway).
+// Return value  :	The number of emergency flight (Int).
+//*************************************************************************************/
 int getEmergencyNum(PRunway runway)
 {
 	if (runway == NULL)
@@ -154,6 +172,13 @@ int getEmergencyNum(PRunway runway)
 	return runway->Emr_num;
 }
 
+/**************************************************************************************
+// Function name :	destroy_aux
+// Description   :	Auxilary function help to remove flight from runway.
+// Parameters    :	Pointer to list of flight (Node*) , flight number to remove (int) ,
+//						pointer to runway (PRanway).
+// Return value  :	SUCCESS if function can delete flight and FAIL else.
+//*************************************************************************************/
 Result destroy_aux(Node *head, int flight_num,PRunway runway)
 {
 	Node *current;
@@ -204,6 +229,7 @@ Result destroy_aux(Node *head, int flight_num,PRunway runway)
 			runway->Reg_list_head=NULL;
 	return SUCCESS;
 }
+
 
 Result removeFlight(PRunway runway, int flight_num)
 {
