@@ -5,12 +5,17 @@
 #include "runway.h"
 #include "ex2.h"
 
+/*************************************************************************************
+*************************************************************************************/
 typedef struct node
 {
 	PFlight flight;
 	struct node* next_flight;
 } Node;
 
+/*************************************************************************************
+The struct of the the runway .
+*************************************************************************************/
 typedef struct runway_t
 {
 	int Runway_ID,Emr_num,Reg_num;
@@ -20,12 +25,10 @@ typedef struct runway_t
 } Runway;
 
 /*************************************************************************************
-//* function name : createRunway
-//* Description   :	Function gets the number of runway (positive integer)
-//*					you want to create and kind of runway: Domestic or International. 
-//* Parameters    :	positive integer for runway ID and type of runway (FlightType),
-//*					Domestic or International.
-//* Return value  :	Pointer for runway 
+// function name : createRunway
+// Description   :	Function gets the number of runway (positive integer)
+// Parameters    :	positive integer for runway ID and type of runway (FlightType),
+// Return value  :	Pointer for runway 
 //**************************************************************************************/
 PRunway createRunway(int runway_num, FlightType runway_type)
 {
@@ -43,11 +46,10 @@ PRunway createRunway(int runway_num, FlightType runway_type)
 	return temp;
 }
 /**************************************************************************************
-//* Function name :	destroyRunway
-//* Description   :	Function destoys the runway , frees all flights from the runway 
-//*					and frees the runway it self . No need for extra job to clear memory.
-//* Parameters    :	Pointer to the runway from PRunway type .
-//* Return value  :	none .
+// Function name :	destroyRunway
+// Description   :	Function destoys the runway , frees all flights from the runway 
+// Parameters    :	Pointer to the runway from PRunway type .
+// Return value  :	none .
 //*************************************************************************************/
 void destroyRunway(PRunway runway)
 {
