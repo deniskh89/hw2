@@ -6,6 +6,7 @@
 #include "ex2.h"
 
 /*************************************************************************************
+ The linked list of the flight 
 *************************************************************************************/
 typedef struct node
 {
@@ -27,7 +28,9 @@ typedef struct runway_t
 /*************************************************************************************
 // function name : createRunway
 // Description   :	Function gets the number of runway (positive integer)
+//						you want to create and kind of runway: Domestic or International. 
 // Parameters    :	positive integer for runway ID and type of runway (FlightType),
+//						Domestic or International.
 // Return value  :	Pointer for runway 
 //**************************************************************************************/
 PRunway createRunway(int runway_num, FlightType runway_type)
@@ -48,6 +51,7 @@ PRunway createRunway(int runway_num, FlightType runway_type)
 /**************************************************************************************
 // Function name :	destroyRunway
 // Description   :	Function destoys the runway , frees all flights from the runway 
+//						and frees the runway it self . No need for extra job to clear memory.
 // Parameters    :	Pointer to the runway from PRunway type .
 // Return value  :	none .
 //*************************************************************************************/
