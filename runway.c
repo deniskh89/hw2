@@ -5,8 +5,6 @@
 #include "runway.h"
 #include "ex2.h"
 
-Result destroy_aux(Node *head, int flight_num, PRunway runway);
-
 typedef struct node
 {
 	PFlight flight;
@@ -230,7 +228,12 @@ Result destroy_aux(Node *head, int flight_num,PRunway runway)
 	return SUCCESS;
 }
 
-
+/**************************************************************************************
+// Function name :	removeFlight
+// Description   :	Function that removes the flight by flight Id from the runway.
+// Parameters    :	Pointer to runway (PRunway), number of flight to remove (int).
+// Return value  :	SUCCESS if function can delete flight and FAIL else.
+//*************************************************************************************/
 Result removeFlight(PRunway runway, int flight_num)
 {
 	if (flight_num<1 || flight_num>MAX_ID || runway == NULL)
@@ -239,6 +242,12 @@ Result removeFlight(PRunway runway, int flight_num)
 		destroy_aux(runway->Reg_list_head, flight_num, runway));
 }
 
+/**************************************************************************************
+// Function name :	depart
+// Description   :	Function that depart the first flight from the runway.
+// Parameters    :	Pointer to runway (PRunway).
+// Return value  :	SUCCESS if function can depart flight and FAIL else.
+//*************************************************************************************/
 Result depart(PRunway runway)
 {
 	if(runway == NULL)
@@ -256,6 +265,12 @@ Result depart(PRunway runway)
 	return FAILURE;
 }
 
+/**************************************************************************************
+// Function name :	getRunwayID
+// Description   :	Function that return the ID of the runway.
+// Parameters    :	Pointer to runway (PRunway).
+// Return value  :	Number of the runway (int).
+//*************************************************************************************/
 int getRunwayID(PRunway runway)
 {
 	if (runway == NULL)
@@ -263,6 +278,12 @@ int getRunwayID(PRunway runway)
 	return runway->Runway_ID;
 }
 
+/**************************************************************************************
+// Function name :	getRunwayType
+// Description   :	Function that return the type of the runway .
+// Parameters    :	Pointer to runway (PRunway).
+// Return value  :	The type of runway DOMESTIC or INTERNATIONAL.
+//*************************************************************************************/
 FlightType getRunwayType(PRunway runway)
 {
 	if (runway == NULL)
@@ -270,6 +291,12 @@ FlightType getRunwayType(PRunway runway)
 	return runway->Type;
 }
 
+/**************************************************************************************
+// Function name :	printRunway
+// Description   :	Function that prints the runway .
+// Parameters    :	Pointer to runway (PRunway).
+// Return value  :	none.
+//*************************************************************************************/
 void printRunway(PRunway runway)
 {
 	if (runway == NULL)
@@ -294,6 +321,14 @@ void printRunway(PRunway runway)
 	}
 }
 
+/**************************************************************************************
+// Function name :	changeDestInRunway
+// Description   :	Function that change from one to the second destination of all 
+//						flights from the first kind .
+// Parameters    :	Pointer to runway (PRunway) , new destenation (char* [3]) , 
+//						old destenation (char* [3]).
+// Return value  :	none.
+//*************************************************************************************/
 void changeDestInRunway(PRunway runway, char* newDest, char* oldDest)
 {
 	if ( runway == NULL)
@@ -314,6 +349,14 @@ void changeDestInRunway(PRunway runway, char* newDest, char* oldDest)
 	}
 	return;
 }
+
+/**************************************************************************************
+// Function name :	delayRunway
+// Description   :	Function that delay all the flight that theres destination is like 
+//						mentiond.
+// Parameters    :	Pointer to runway (PRunway), new destenation (char* [3]).
+// Return value  :	SUCCESS if can delay and FAILURE if dont .
+//*************************************************************************************/
 Result delayRunway(PRunway runway, char* Dest)
 {
 	int i=0;
