@@ -8,6 +8,7 @@
 /*************************************************************************************
  The linked list of the flight 
 *************************************************************************************/
+
 typedef struct node
 {
 	PFlight flight;
@@ -25,6 +26,7 @@ typedef struct runway_t
 	Node* Reg_list_head;
 } Runway;
 
+
 /*************************************************************************************
 // function name : createRunway
 // Description   :	Function gets the number of runway (positive integer)
@@ -33,6 +35,7 @@ typedef struct runway_t
 //						Domestic or International.
 // Return value  :	Pointer for runway 
 //**************************************************************************************/
+
 PRunway createRunway(int runway_num, FlightType runway_type)
 {
 	if (runway_num<1 || runway_num>MAX_ID)	//cheching the input
@@ -48,6 +51,7 @@ PRunway createRunway(int runway_num, FlightType runway_type)
 	temp->Reg_num = 0;
 	return temp;
 }
+
 /**************************************************************************************
 // Function name :	destroyRunway
 // Description   :	Function destoys the runway , frees all flights from the runway 
@@ -64,8 +68,10 @@ void destroyRunway(PRunway runway)
 	free(runway);
 	return;
 }
-/**************************************************************************************
-// Function name :	addFlight
+
+
+//*************************************************************************************
+// Function name :	addFlight
 // Description   :	Function add flight to the runway , Emergency flight are added to 
 //						the beginning of the list right after last emergency flight . 
 //						Regular flights are added at the end of the list.
