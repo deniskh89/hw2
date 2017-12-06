@@ -4,7 +4,6 @@
 #include "flight.h"
 #include "runway.h"
 #include "ex2.h"
-
 Result destroy_aux(Node *head, int flight_num, PRunway runway);
 
 typedef struct node
@@ -22,7 +21,7 @@ typedef struct runway_t
 } Runway;
 
 //*************************************************************************************
-//* function name : createRunway
+//* function name : createRunway
 //* Description   :	Function gets the number of runway (positive integer)
 //*					you want to create and kind of runway: Domestic or International. 
 //* Parameters    :	positive integer for runway ID and type of runway (FlightType),
@@ -45,7 +44,7 @@ PRunway createRunway(int runway_num, FlightType runway_type)
 	return temp;
 }
 //*************************************************************************************
-//* Function name :	destroyRunway
+//* Function name :	destroyRunway
 //* Description   :	Function destoys the runway , frees all flights from the runway 
 //*					and frees the runway it self . No need for extra job to clear memory.
 //* Parameters    :	Pointer to the runway from PRunway type .
@@ -61,7 +60,7 @@ void destroyRunway(PRunway runway)
 	return;
 }
 //*************************************************************************************
-// Function name :	addFlight
+// Function name :	addFlight
 // Description   :	Function add flight to the runway , Emergency flight are added to 
 //					the beginning of the list right after last emergency flight . 
 //					Regular flights are added at the end of the list.
