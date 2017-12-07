@@ -5,7 +5,7 @@
 #include "ex2.h"
 #include "runway.h"
 
-
+//requested function.
 Result addRunway(int runway_num, FlightType runway_type);
 Result removeRunway(int runway_num);
 Result addFlightToAirport(int Flight_num, FlightType Typef, char* Destenation, BOOL Emergency);
@@ -15,4 +15,4 @@ Result delay(char* Destenation);
 void printAirport();
 void destroyAirport();
 
-#endif /* EX2_H_ */
+#endif
